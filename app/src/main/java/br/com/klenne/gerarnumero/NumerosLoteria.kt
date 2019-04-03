@@ -1,4 +1,3 @@
-
 package br.com.klenne.gerarnumero
 
 /*
@@ -29,6 +28,12 @@ class NumerosLoteria {
                 )
             )
 
+            TipoDeJogo.LOTOFACIL.tipoJogo -> return formatarResultado(
+                gerarNumeros(
+                    QuantidadeDeNumerosApostados.LOTOFACILAPOSTA.quantidadeApostados,
+                    NumeroLimiteParaApostar.LOTOFACILLIMITE.numeroLimite
+                )
+            )
             else -> return "0"
         }
 
@@ -67,15 +72,26 @@ fun formatarResultado(array: ArrayList<Int>): String {
     //Função que concatena todos os numeros gerados em uma única String
 
     var resultadoFormatado = ""
+    var controleTabulacao = 1
 
     for (i in 0 until array.size) {
 
-        resultadoFormatado += when {
+        when {
 
-            i < array.size - 1 -> array[i].toString() + "-"
+            i < array.size - 1 -> {
+                if (array.size > 6 && controleTabulacao >= 5) {
+                    resultadoFormatado += formatarUnidades(array[i]) + "\n"
+                    controleTabulacao = 0
+                } else {
+                    resultadoFormatado += formatarUnidades(array[i]) + "-"
+                }
+                controleTabulacao++
 
-            else -> array[i].toString()
+            }
+
+            else -> resultadoFormatado += formatarUnidades(array[i])
         }
+
 
     }
     return resultadoFormatado
@@ -94,4 +110,13 @@ fun verificaNumerosIguais(numeroGerado: Int, array: ArrayList<Int>): Boolean {
     }
 
     return false
+}
+
+fun formatarUnidades(numero: Int): String {
+
+    return if (numero < 10) {
+        "0$numero"
+    } else {
+        "$numero"
+    }
 }

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
         btn_gerar.setOnClickListener(this)
 
-        val tiposDeJogo = arrayListOf(TipoDeJogo.MEGASENA.tipoJogo, TipoDeJogo.QUINA.tipoJogo)
+        val tiposDeJogo = arrayListOf(TipoDeJogo.MEGASENA.tipoJogo, TipoDeJogo.QUINA.tipoJogo,TipoDeJogo.LOTOFACIL.tipoJogo)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, tiposDeJogo)
 
         spn_tiposDeJogos.adapter = adapter
@@ -58,6 +58,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                         txv_titulo.text = "Gerar Números Quina"
                         imv_logo.setImageResource(R.drawable.quina)
+
+                    }
+                    TipoDeJogo.LOTOFACIL.tipoJogo -> {
+
+                        txv_titulo.text = "Gerar Números LotoFácil"
+                        imv_logo.setImageResource(R.drawable.lotofacillogo)
 
                     }
 
