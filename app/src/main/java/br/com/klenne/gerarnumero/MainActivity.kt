@@ -52,18 +52,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                         txv_titulo.text = "Gerar Números Mega Sena"
                         imv_logo.setImageResource(R.drawable.megasena)
+                        txv_numeroGerado.text=""
 
                     }
                     TipoDeJogo.QUINA.tipoJogo -> {
 
                         txv_titulo.text = "Gerar Números Quina"
                         imv_logo.setImageResource(R.drawable.quina)
+                        txv_numeroGerado.text=""
+
 
                     }
                     TipoDeJogo.LOTOFACIL.tipoJogo -> {
 
                         txv_titulo.text = "Gerar Números LotoFácil"
                         imv_logo.setImageResource(R.drawable.lotofacillogo)
+                        txv_numeroGerado.text=""
+
 
                     }
 
