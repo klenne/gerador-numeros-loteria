@@ -16,16 +16,21 @@
             android:textSize="24sp"
             android:layout_marginTop="28dp" app:layout_constraintTop_toBottomOf="@+id/txv_numerosGeradosTitulo"
             android:textAlignment="center"/>
+
     <ImageView
-            android:layout_width="108dp"
-            app:srcCompat="@mipmap/ic_logo_foreground"
-            android:id="@+id/imv_logo"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="169dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="170dp" app:layout_constraintHorizontal_bias="0.489"
-            tools:srcCompat="@mipmap/ic_logo_foreground" android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/spn_tiposDeJogos" android:layout_height="107dp"
-            android:contentDescription="Imagens de logos  dos jogos da loteria" tools:ignore="HardcodedText"/>
+        android:id="@+id/imv_logo"
+        android:layout_width="108dp"
+        android:layout_height="107dp"
+        android:layout_marginStart="169dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="170dp"
+        android:contentDescription="@string/descricao_imagem_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spn_tiposDeJogos"
+        app:srcCompat="@mipmap/ic_logo_foreground"
+        tools:srcCompat="@mipmap/ic_logo_foreground" />
     <Button
             android:text="@string/gerar_n_meros"
             android:layout_width="wrap_content"
@@ -38,15 +43,15 @@
             android:layout_marginBottom="95dp" app:layout_constraintBottom_toBottomOf="parent"
             android:typeface="normal"/>
     <TextView
-            android:text="Gerador Números Mega Sena"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txv_titulo" android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent" tools:ignore="HardcodedText"/>
+            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/gerar_megasena"/>
     <TextView
-            android:text="Números Gerados:"
+            android:text="@string/numeros_gerados"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txv_numerosGeradosTitulo" app:layout_constraintStart_toStartOf="parent"

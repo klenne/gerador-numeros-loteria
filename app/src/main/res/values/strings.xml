@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">GerarNumero</string>
     <string name="gerar_n_meros">gerar números</string>
+    <string name="gerar_megasena">Gerar Números Mega Sena</string>
+    <string name="gerar_quina">Gerar Números Quina</string>
+    <string name="gerar_lotoFacil">Gerar Números LotoFácil</string>
+    <string name="gerar_duplasena">Gerar Números Dupla Sena</string>
+    <string name="gerar_dia_de_sorte">Gerar Números Dia De Sorte</string>
+    <string name="gerar_lotomania">Gerar Números LotoMania</string>
+    <string name="numeros_gerados">Números Gerados:</string>
+    <string name="descricao_imagem_logo">Imagens de logos dos jogos da loteria</string>
+
+
+
 </resources>

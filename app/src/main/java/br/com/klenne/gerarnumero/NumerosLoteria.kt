@@ -1,5 +1,7 @@
 package br.com.klenne.gerarnumero
 
+
+
 /*
 * Classe que gera os numeros aleatórios
 *
@@ -12,35 +14,51 @@ class NumerosLoteria {
 
         //Função que verifica qual jogo foi escolhido e direciona para os respectivos métodos
 
-        when (opcao) {
+        return when (opcao) {
 
-            TipoDeJogo.MEGASENA.tipoJogo -> return formatarResultado(
+            TipoDeJogo.MEGASENA.tipoJogo -> formatarResultado(
                 gerarNumeros(
                     QuantidadeDeNumerosApostados.MEGASENAAPOSTA.quantidadeApostados,
                     NumeroLimiteParaApostar.MEGASENALIMITE.numeroLimite
                 )
             )
 
-            TipoDeJogo.QUINA.tipoJogo -> return formatarResultado(
+            TipoDeJogo.QUINA.tipoJogo -> formatarResultado(
                 gerarNumeros(
                     QuantidadeDeNumerosApostados.QUINAAPOSTA.quantidadeApostados,
                     NumeroLimiteParaApostar.QUINALIMITE.numeroLimite
                 )
             )
 
-            TipoDeJogo.LOTOFACIL.tipoJogo -> return formatarResultado(
+            TipoDeJogo.LOTOFACIL.tipoJogo -> formatarResultado(
                 gerarNumeros(
                     QuantidadeDeNumerosApostados.LOTOFACILAPOSTA.quantidadeApostados,
                     NumeroLimiteParaApostar.LOTOFACILLIMITE.numeroLimite
                 )
             )
-            else -> return "0"
+
+            TipoDeJogo.DUPLASENA.tipoJogo -> formatarResultado(
+                gerarNumeros(
+                    QuantidadeDeNumerosApostados.DUPLASENAAPOSTA.quantidadeApostados,
+                    NumeroLimiteParaApostar.DUPLASENALIMITE.numeroLimite
+                )
+            )
+
+            TipoDeJogo.DIADESORTE.tipoJogo -> formatarResultado(
+                gerarNumeros(
+                    QuantidadeDeNumerosApostados.DIADESORTEAPOSTA.quantidadeApostados,
+                    NumeroLimiteParaApostar.DIADESORTELIMITE.numeroLimite
+                )
+            ) + "\n" + gerarMes()
+
+
+            else -> ""
         }
 
 
     }
 
-    private fun gerarNumeros(
+    fun gerarNumeros(
         quantidadeNumerosAGerar: Int,
         range: Int
     ): ArrayList<Int> {
@@ -65,58 +83,88 @@ class NumerosLoteria {
     }
 
 
-}
+    fun formatarResultado(arrayList: ArrayList<Int>): String {
 
-fun formatarResultado(array: ArrayList<Int>): String {
+        //Função que concatena todos os numeros gerados em uma única String
 
-    //Função que concatena todos os numeros gerados em uma única String
+        var resultadoFormatado = ""
+        var controleTabulacao = 1
+        val sort = QuickSort()
+        val array = sort.ordenar(arrayList.toIntArray())
 
-    var resultadoFormatado = ""
-    var controleTabulacao = 1
+        for (i in 0 until array.size) {
 
-    for (i in 0 until array.size) {
+            when {
 
-        when {
+                i < array.size - 1 -> {
 
-            i < array.size - 1 -> {
-                if (array.size > 6 && controleTabulacao >= 5) {
-                    resultadoFormatado += formatarUnidades(array[i]) + "\n"
-                    controleTabulacao = 0
-                } else {
-                    resultadoFormatado += formatarUnidades(array[i]) + "-"
+                    if (array.size > 7 && controleTabulacao >= 5) {
+
+                        resultadoFormatado += formatarUnidades(array[i]) + "\n"
+                        controleTabulacao = 0
+
+                    } else {
+
+                        resultadoFormatado += formatarUnidades(array[i]) + "-"
+
+                    }
+
+                    controleTabulacao++
+
                 }
-                controleTabulacao++
 
+                else -> resultadoFormatado += formatarUnidades(array[i])
             }
 
-            else -> resultadoFormatado += formatarUnidades(array[i])
+
+        }
+        return resultadoFormatado
+    }
+
+    private fun verificaNumerosIguais(numeroGerado: Int, array: ArrayList<Int>): Boolean {
+
+        //Função para impedir que existam duplicatas dos números gerados aleatoriamente dentro do vetor
+
+        for (i in 0 until array.size) {
+
+            if (array[i] == numeroGerado) {
+
+                return true
+            }
         }
 
-
+        return false
     }
-    return resultadoFormatado
-}
 
-fun verificaNumerosIguais(numeroGerado: Int, array: ArrayList<Int>): Boolean {
+    private fun formatarUnidades(numero: Int): String {
 
-    //Função para impedir que existam duplicatas dos números gerados aleatoriamente dentro do vetor
-
-    for (i in 0 until array.size) {
-
-        if (array[i] == numeroGerado) {
-
-            return true
+        return when {
+            numero < 10 -> "0$numero"
+            numero == 100 ->"00"
+            else -> "$numero"
         }
     }
 
-    return false
-}
+    private fun gerarMes(): String {
+        val mes = (1..12).random()
 
-fun formatarUnidades(numero: Int): String {
+        return when (mes) {
+            1 -> "Janeiro"
+            2 -> "Fevereiro"
+            3 -> "Março"
+            4 -> "Abril"
+            5 -> "Maio"
+            6 -> "Junho"
+            7 -> "Julho"
+            8 -> "Agosto"
+            9 -> "Setembro"
+            10 -> "Outubro"
+            11 -> "Novembro"
+            12 -> "Dezembro"
+            else -> ""
+        }
 
-    return if (numero < 10) {
-        "0$numero"
-    } else {
-        "$numero"
     }
+
+
 }

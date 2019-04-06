@@ -1,6 +1,6 @@
 package br.com.klenne.gerarnumero
 
-import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -18,7 +18,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (id == R.id.btn_gerar) {
 
             val numerosGerados = NumerosLoteria()
+            if (spn_tiposDeJogos.selectedItem == TipoDeJogo.LOTOMANIA.tipoJogo) {
 
+                val alerta = AlertDialog.Builder(this)
+
+                val numeros = numerosGerados.formatarResultado(
+                    numerosGerados.gerarNumeros(
+                        QuantidadeDeNumerosApostados.LOTOMANIAAPOSTA.quantidadeApostados,
+                        NumeroLimiteParaApostar.LOTOMANIALIMITE.numeroLimite
+                    )
+                )
+
+                alerta.setMessage(numeros)
+                //Adicionando titulo
+                alerta.setTitle("Numeros Gerados")
+
+                //Adicionando botão neutro
+                alerta.setNeutralButton("Voltar", null)
+
+                //Forçando usuario não cancelar alerta
+                alerta.setCancelable(false)
+
+                //Executa o alerta
+                alerta.create().show()
+
+            }
             txv_numeroGerado.text = numerosGerados.selecionarJogo(spn_tiposDeJogos.selectedItem.toString())
         }
     }
@@ -29,7 +53,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
         btn_gerar.setOnClickListener(this)
 
-        val tiposDeJogo = arrayListOf(TipoDeJogo.MEGASENA.tipoJogo, TipoDeJogo.QUINA.tipoJogo,TipoDeJogo.LOTOFACIL.tipoJogo)
+        val tiposDeJogo = arrayListOf(
+            TipoDeJogo.MEGASENA.tipoJogo,
+            TipoDeJogo.QUINA.tipoJogo,
+            TipoDeJogo.LOTOFACIL.tipoJogo,
+            TipoDeJogo.DUPLASENA.tipoJogo,
+            TipoDeJogo.DIADESORTE.tipoJogo,
+            TipoDeJogo.LOTOMANIA.tipoJogo
+        )
+
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, tiposDeJogo)
 
         spn_tiposDeJogos.adapter = adapter
@@ -40,7 +72,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 //.
             }
 
-            @SuppressLint("SetTextI18n")
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
@@ -50,24 +81,49 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                     TipoDeJogo.MEGASENA.tipoJogo -> {
 
-                        txv_titulo.text = "Gerar Números Mega Sena"
+                        txv_titulo.text = getString(R.string.gerar_megasena)
                         imv_logo.setImageResource(R.drawable.megasena)
-                        txv_numeroGerado.text=""
+                        txv_numeroGerado.text = ""
+
 
                     }
                     TipoDeJogo.QUINA.tipoJogo -> {
 
-                        txv_titulo.text = "Gerar Números Quina"
+                        txv_titulo.text = getString(R.string.gerar_quina)
                         imv_logo.setImageResource(R.drawable.quina)
-                        txv_numeroGerado.text=""
+                        txv_numeroGerado.text = ""
 
 
                     }
                     TipoDeJogo.LOTOFACIL.tipoJogo -> {
 
-                        txv_titulo.text = "Gerar Números LotoFácil"
-                        imv_logo.setImageResource(R.drawable.lotofacillogo)
-                        txv_numeroGerado.text=""
+                        txv_titulo.text = getString(R.string.gerar_lotoFacil)
+                        imv_logo.setImageResource(R.drawable.lotofacil)
+                        txv_numeroGerado.text = ""
+
+
+                    }
+                    TipoDeJogo.DUPLASENA.tipoJogo -> {
+
+                        txv_titulo.text = getString(R.string.gerar_duplasena)
+                        imv_logo.setImageResource(R.drawable.duplasena)
+                        txv_numeroGerado.text = ""
+
+
+                    }
+                    TipoDeJogo.DIADESORTE.tipoJogo -> {
+
+                        txv_titulo.text = getString(R.string.gerar_dia_de_sorte)
+                        imv_logo.setImageResource(R.drawable.diadesorte)
+                        txv_numeroGerado.text = ""
+
+
+                    }
+                    TipoDeJogo.LOTOMANIA.tipoJogo -> {
+
+                        txv_titulo.text = getString(R.string.gerar_lotomania)
+                        imv_logo.setImageResource(R.drawable.lotomania)
+                        txv_numeroGerado.text = ""
 
 
                     }
