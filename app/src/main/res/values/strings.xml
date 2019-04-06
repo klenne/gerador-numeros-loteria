@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GerarNumero</string>
+    <string name="app_name">Gerador NumLoto</string>
     <string name="gerar_n_meros">gerar números</string>
     <string name="gerar_megasena">Gerar Números Mega Sena</string>
     <string name="gerar_quina">Gerar Números Quina</string>
