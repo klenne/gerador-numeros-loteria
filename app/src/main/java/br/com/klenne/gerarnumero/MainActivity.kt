@@ -1,15 +1,25 @@
 package br.com.klenne.gerarnumero
 
-import android.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import android.view.MotionEvent
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        btn_gerar.setOnClickListener(this)
+        configureSpinner()
+    }
+
 
     override fun onClick(v: View?) {
 
@@ -17,42 +27,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         if (id == R.id.btn_gerar) {
 
-            val numerosGerados = NumerosLoteria()
-            if (spn_tiposDeJogos.selectedItem == TipoDeJogo.LOTOMANIA.tipoJogo) {
-
-                val alerta = AlertDialog.Builder(this)
-
-                val numeros = numerosGerados.formatarResultado(
-                    numerosGerados.gerarNumeros(
-                        QuantidadeDeNumerosApostados.LOTOMANIAAPOSTA.quantidadeApostados,
-                        NumeroLimiteParaApostar.LOTOMANIALIMITE.numeroLimite
-                    )
-                )
-
-                alerta.setMessage(numeros)
-                //Adicionando titulo
-                alerta.setTitle("Numeros Gerados")
-
-                //Adicionando botão neutro
-                alerta.setNeutralButton("Voltar", null)
-
-                //Forçando usuario não cancelar alerta
-                alerta.setCancelable(false)
-
-                //Executa o alerta
-                alerta.create().show()
-
-            }
-            txv_numeroGerado.text = numerosGerados.selecionarJogo(spn_tiposDeJogos.selectedItem.toString())
+            //chamando função para mostrar numeros gerados no txv
+            setNumerosGerados()
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        btn_gerar.setOnClickListener(this)
+    fun setNumerosGerados() {
+        val numerosGerados = NumerosLoteria()
+        txv_numeroGerado.text = numerosGerados.selecionarJogo(spn_tiposDeJogos.selectedItem.toString())
+    }
 
+
+    private fun configureSpinner() {
+        //preenchendo spinner
         val tiposDeJogo = arrayListOf(
             TipoDeJogo.MEGASENA.tipoJogo,
             TipoDeJogo.QUINA.tipoJogo,
@@ -65,6 +53,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, tiposDeJogo)
 
         spn_tiposDeJogos.adapter = adapter
+
+        //configurando o Spinner
         spn_tiposDeJogos.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
 
@@ -75,47 +65,47 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
-                val selectedItem = parent.getItemAtPosition(position).toString()
+                //mudando a imagem e strings de acordo com jogo selecionado
 
-                when (selectedItem) {
+                when (parent.getItemAtPosition(position).toString()) {
 
                     TipoDeJogo.MEGASENA.tipoJogo -> {
 
                         txv_titulo.text = getString(R.string.gerar_megasena)
                         imv_logo.setImageResource(R.drawable.megasena)
-                        txv_numeroGerado.text = ""
-
+                        setColor(R.color.MegaSena)
+                        setNumerosGerados()
 
                     }
                     TipoDeJogo.QUINA.tipoJogo -> {
 
                         txv_titulo.text = getString(R.string.gerar_quina)
                         imv_logo.setImageResource(R.drawable.quina)
-                        txv_numeroGerado.text = ""
-
+                        setColor(R.color.Quina)
+                        setNumerosGerados()
 
                     }
                     TipoDeJogo.LOTOFACIL.tipoJogo -> {
 
                         txv_titulo.text = getString(R.string.gerar_lotoFacil)
                         imv_logo.setImageResource(R.drawable.lotofacil)
-                        txv_numeroGerado.text = ""
-
+                        setColor(R.color.Facil)
+                        setNumerosGerados()
 
                     }
                     TipoDeJogo.DUPLASENA.tipoJogo -> {
 
                         txv_titulo.text = getString(R.string.gerar_duplasena)
                         imv_logo.setImageResource(R.drawable.duplasena)
-                        txv_numeroGerado.text = ""
-
-
+                        setColor(R.color.DuplaSena)
+                        setNumerosGerados()
                     }
                     TipoDeJogo.DIADESORTE.tipoJogo -> {
 
                         txv_titulo.text = getString(R.string.gerar_dia_de_sorte)
                         imv_logo.setImageResource(R.drawable.diadesorte)
-                        txv_numeroGerado.text = ""
+                        setColor(R.color.DiaDeSorte)
+                        setNumerosGerados()
 
 
                     }
@@ -123,7 +113,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                         txv_titulo.text = getString(R.string.gerar_lotomania)
                         imv_logo.setImageResource(R.drawable.lotomania)
-                        txv_numeroGerado.text = ""
+                        setColor(R.color.Mania)
+                        setNumerosGerados()
 
 
                     }
@@ -131,6 +122,46 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
 
+
         }
     }
+
+    //função para mudar a cor de spinner e de botão
+    fun setColor(cor: Int) {
+        btn_gerar.setBackgroundResource(cor)
+        spn_tiposDeJogos.setPopupBackgroundResource(cor)
+
+    }
+
+    //para deixar em tela cheia
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        hideSystemUI()
+
+    }
+
+    //deixando em modo tela cheia
+    private fun hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                // Set the content to appear under the system bars so that the
+                // content doesn't resize when the system bars hide and show.
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                // Hide the nav bar and status bar
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
+    //evento que quando arrasta para baixo deixa em tela cheia
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN -> hideSystemUI()
+        }
+        return super.onTouchEvent(event)
+    }
+
 }

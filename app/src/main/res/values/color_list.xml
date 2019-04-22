@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="Mania">#F6C491</color>
+    <color name="Facil">#F19BBF</color>
+    <color name="Quina">#008AFF</color>
+    <color name="MegaSena">#7BC4A0</color>
+    <color name="DuplaSena">#DA4883</color>
+    <color name="DiaDeSorte">#F8DC78</color>
+
+</resources>

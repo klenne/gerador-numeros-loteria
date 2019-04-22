@@ -51,7 +51,12 @@ class NumerosLoteria {
                 )
             ) + "\n" + gerarMes()
 
-
+            TipoDeJogo.LOTOMANIA.tipoJogo -> formatarResultado(
+                gerarNumeros(
+                    QuantidadeDeNumerosApostados.LOTOMANIAAPOSTA.quantidadeApostados,
+                    NumeroLimiteParaApostar.LOTOMANIALIMITE.numeroLimite
+                )
+            )
             else -> ""
         }
 
